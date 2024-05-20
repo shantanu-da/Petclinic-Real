@@ -5,7 +5,7 @@ pipeline{
         maven 'maven3'
     }
     environment {
-        SCANNER_HOME=tool 'sonar-scanner'
+        SCANNER_HOME = tool 'sonar-scanner'
     }
     stages {
         stage('clean workspace'){
@@ -30,8 +30,7 @@ pipeline{
         }
         stage("Sonarqube Analysis "){
             steps{
-                withSonarQubeEnv('sonar-server') {
-                withSonarQubeEnv(credentialsId: 'sonar-server')
+                withSonarQubeEnv(installationName: 'sonar-server', credentialsId: 'sonarqube-token') {
                     sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Petclinic \
                     -Dsonar.java.binaries=. \
                     -Dsonar.projectKey=Petclinic '''
